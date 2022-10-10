@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  this-one-fails:
+    name: This one fails
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Fail
+        id: publish
+        run: |
+          ls -al /whatever
+      - name: This one is conditional
+        if: steps.publish.conclusion == 'failure'
+        run: |
+          echo "This is just a test"
