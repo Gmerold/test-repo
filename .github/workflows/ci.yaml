@@ -16,6 +16,6 @@ jobs:
         run: |
           ls -al /whatever
       - name: This one is conditional
-        if: steps.publish.conclusion == 'failure'
+        if: ${{ failure() && steps.publish.conclusion == 'failure' }}
         run: |
           echo "This is just a test"
