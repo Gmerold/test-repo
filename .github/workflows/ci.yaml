@@ -12,9 +12,12 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Fail
-        id: publish
         run: |
           ls -al /whatever
+      - name: Succeed
+        id: publish
+        run: |
+          ls -al
       - name: This one is conditional
         if: ${{ failure() && steps.publish.conclusion == 'failure' }}
         run: |
