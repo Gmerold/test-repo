@@ -14,9 +14,10 @@ jobs:
 
   create-issue:
     runs-on: ubuntu-latest
+    if: ${{ always() && contains(join(needs.*.result, ','), 'failure') }}
+    needs: [ failing-job ]
     steps:
       - name: Create issue
-        if: failure()
         uses: dacbd/create-issue-action@main
         with:
           token: ${{ github.token }}
