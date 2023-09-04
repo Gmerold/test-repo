@@ -21,10 +21,11 @@ jobs:
         id: check-issue
         continue-on-error: true
         run: |
-          echo "existing_issues=$(curl -L \
-            -H 'Accept: application/vnd.github+json' \
-            -H 'Authorization: Bearer ${{ github.token }}' \
-            https://api.github.com/repos/$GITHUB_REPOSITORY/issues" >> $GITHUB_OUTPUT
+          if curl -L -H "Authorization: Bearer ${{ github.token }}" https://api.github.com/repos/$GITHUB_REPOSITORY/issues; then
+            echo "True" >> $GITHUB_OUTPUT
+          else
+            echo "False" >> $GITHUB_OUTPUT
+          fi
       - name: Test
         run: echo ${{ steps.check-issue.outputs.existing_issues }}
       - name: Create issue
