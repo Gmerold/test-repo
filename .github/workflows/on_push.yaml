@@ -21,12 +21,12 @@ jobs:
         id: check-issue
         continue-on-error: true
         run: |
-          curl -L \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ github.token }}" \
-            https://api.github.com/repos/$GITHUB_REPOSITORY/issues | grep "CI run failed"
+          echo "existing_issues=$(curl -L \
+            -H 'Accept: application/vnd.github+json' \
+            -H 'Authorization: Bearer ${{ github.token }}' \
+            https://api.github.com/repos/$GITHUB_REPOSITORY/issues | grep 'CI run failed')"
       - name: Test
-        run: echo ${{ steps.check-issue.outputs }}
+        run: echo ${{ steps.check-issue.outputs.existing_issues }}
       - name: Create issue
         uses: dacbd/create-issue-action@main
         with:
