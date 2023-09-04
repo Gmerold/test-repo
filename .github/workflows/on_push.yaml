@@ -24,7 +24,7 @@ jobs:
           if curl -L -H "Authorization: Bearer ${{ github.token }}" https://api.github.com/repos/$GITHUB_REPOSITORY/issues | grep "CI run failed"; then
             echo "$(echo 'True')" >> $GITHUB_OUTPUT
           else
-            echo $(echo 'False')" >> $GITHUB_OUTPUT
+            echo "$(echo 'False')" >> $GITHUB_OUTPUT
           fi
       - name: Test
         run: echo ${{ steps.check-issue.outputs.existing_issues }}
