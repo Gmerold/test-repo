@@ -32,4 +32,10 @@ jobs:
         with:
           token: ${{ github.token }}
           title: CI run failed
-          body: my new issue
+          body: |
+            ### Context
+            [Failed Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            [Codebase](https://github.com/${{ github.repository }}/tree/${{ github.sha }})
+            Workflow name - `${{ github.workflow }}`
+            Job -           `${{ github.job }}`
+            Status -        `${{ job.status }}`
