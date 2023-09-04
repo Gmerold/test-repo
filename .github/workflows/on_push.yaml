@@ -14,7 +14,7 @@ jobs:
           curl -L \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ github.token }}" \
-            https://api.github.com/repos/${env.GITHUB_REPOSITORY}/issues
+            https://api.github.com/repos/${{ env.GITHUB_REPOSITORY }}/issues
 
   create-issue:
     runs-on: ubuntu-latest
