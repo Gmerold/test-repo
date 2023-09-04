@@ -19,6 +19,7 @@ jobs:
     steps:
       - name: Check whether the issue already exists
         id: check-issue
+        continue-on-error: true
         run: |
           curl -L \
             -H "Accept: application/vnd.github+json" \
