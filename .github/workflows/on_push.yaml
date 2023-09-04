@@ -27,7 +27,7 @@ jobs:
             echo ISSUE_EXISTS="False" >> $GITHUB_OUTPUT
           fi
       - name: Create issue
-        if: ${{ steps.check-issue.outputs.ISSUE_EXISTS }} == "False"
+        if: "${{ steps.check-issue.outputs.ISSUE_EXISTS }}" == "False"
         uses: dacbd/create-issue-action@main
         with:
           token: ${{ github.token }}
