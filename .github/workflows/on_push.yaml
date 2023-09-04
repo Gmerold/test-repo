@@ -22,12 +22,12 @@ jobs:
         continue-on-error: true
         run: |
           if curl -L -H "Authorization: Bearer ${{ github.token }}" https://api.github.com/repos/$GITHUB_REPOSITORY/issues | grep "CI run failed"; then
-            echo "$(echo 'True')" >> $GITHUB_OUTPUT
+            echo ISSUE_EXISTS="True" >> $GITHUB_OUTPUT
           else
-            echo "$(echo 'False')" >> $GITHUB_OUTPUT
+            echo ISSUE_EXISTS="False" >> $GITHUB_OUTPUT
           fi
       - name: Test
-        run: echo ${{ steps.check-issue.outputs.existing_issues }}
+        run: echo ${{ steps.check-issue.outputs.ISSUE_EXISTS }}
       - name: Create issue
         uses: dacbd/create-issue-action@main
         with:
