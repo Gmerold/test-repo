@@ -11,7 +11,6 @@ jobs:
         uses: actions/checkout@v3
       - name: Failing job
         run: |
-          env
           curl -L \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ github.token }}" \
