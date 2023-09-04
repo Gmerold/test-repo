@@ -24,7 +24,7 @@ jobs:
           echo "existing_issues=$(curl -L \
             -H 'Accept: application/vnd.github+json' \
             -H 'Authorization: Bearer ${{ github.token }}' \
-            https://api.github.com/repos/$GITHUB_REPOSITORY/issues | grep 'CI run failed')" >> $GITHUB_OUTPUT
+            https://api.github.com/repos/$GITHUB_REPOSITORY/issues" >> $GITHUB_OUTPUT
       - name: Test
         run: echo ${{ steps.check-issue.outputs.existing_issues }}
       - name: Create issue
