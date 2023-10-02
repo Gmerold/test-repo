@@ -4,43 +4,14 @@ on:
   push:
 
 jobs:
-  successful-job:
+  test-job:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Successful job
-        run: exit 0
-
-  failing-job:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Failing job
-        run: exit 1
-
-  create-issue:
-    runs-on: ubuntu-latest
-    if: ${{ always() && contains(join(needs.*.result, ','), 'failure') }}
-    needs: [ successful-job, failing-job ]
-    steps:
-      - name: Check whether the issue already exists
-        id: check-issue
-        continue-on-error: true
+      - name: Dispatch
         run: |
-          if curl -L -H "Authorization: Bearer ${{ github.token }}" https://api.github.com/repos/$GITHUB_REPOSITORY/issues | grep "CI run failed"; then
-            echo ISSUE_EXISTS="True" >> $GITHUB_OUTPUT
-          else
-            echo ISSUE_EXISTS="False" >> $GITHUB_OUTPUT
-          fi
-      - name: Create issue
-        if: steps.check-issue.outputs.ISSUE_EXISTS == 'False'
-        uses: dacbd/create-issue-action@main
-        with:
-          token: ${{ github.token }}
-          title: CI run failed
-          body: |
-            ### Context
-            [Failed Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-            [Codebase](https://github.com/${{ github.repository }}/tree/${{ github.sha }})
+          curl -H "Accept: application/vnd.github.everest-preview+json" \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          --request POST \
+          --data '{"event_type": "operator_change", "client_payload": { "github_ref": "${{ github.ref }}", "github_repo": "${{ github.repository }}" }}' https://api.github.com/repos/Gmerold/test-repo-2/dispatches
