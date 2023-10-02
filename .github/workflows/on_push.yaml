@@ -14,7 +14,7 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.AUTH_TOKEN }}
+          token: ${{ github.token }}
           repository: Gmerold/test-repo-2
           event-type: operator-changed
           client-payload: '{"github_repo": "${{ github.repository }}"}'
