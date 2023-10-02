@@ -1,19 +1,9 @@
 name: Push
 
 on:
-  push
-
-permissions:
-  actions: write
-  checks: write
-  contents: write
-  deployments: write
-  issues: write
-  packages: write
-  pull-requests: write
-  repository-projects: write
-  security-events: write
-  statuses: write
+  push:
+    branches:
+      - main
 
 jobs:
   test-job:
@@ -24,7 +14,7 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ github.token }}
+          token: ${{ secrets.AUTH_TOKEN }}
           repository: Gmerold/test-repo-2
           event-type: operator-changed
           client-payload: '{"github_repo": "${{ github.repository }}"}'
