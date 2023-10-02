@@ -15,3 +15,4 @@ jobs:
           token: ${{ secrets.AUTH_TOKEN }}
           repository: Gmerold/test-repo-2
           event-type: operator-changed
+          client-payload: '{"github_ref": "${{ github.ref }}", "github_repo": "${{ github.repository }}"}'
